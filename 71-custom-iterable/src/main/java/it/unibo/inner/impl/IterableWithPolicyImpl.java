@@ -47,49 +47,7 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T> {
             return elements[currentIndex++];  
         }
     }
-    /*  private ArrayList<T> elements;
-    private Predicate<T> filter;
-    public IterableWithPolicyImpl(ArrayList<T> elements, Predicate<T> filter) {
-        this.elements = elements;
-        this.setIterationPolicy(filter);
-    }
-    public IterableWithPolicyImpl(ArrayList<T> elements) {
-        this(elements, new Predicate<T>() {
-            @Override
-            public boolean test(T elem) {
-                return true; 
-            }
-        });
-    }
     
-    public void setIterationPolicy(final Predicate<T> filter) {
-        this.filter = filter;
-    }
-
-    public java.util.Iterator<T> iterator(){
-        return new InnerIterator();
-    }
-
-    private class InnerIterator implements java.util.Iterator<T> {
-        private int currentIndex = 0;
-
-        public boolean hasNext() {
-            int nElem = 0;
-            while(currentIndex < elements.size()){
-                if(filter.test(elements.get(currentIndex))){
-                    
-                    return true;
-                }
-                currentIndex++;
-            }
-            //throw a exception if not found another element
-            return false;
-        }
-
-        public T next()  {
-            return hasNext() ? elements.get(currentIndex) : new NoSuchElementException();  
-        }
-    }*/
 
 
 }
