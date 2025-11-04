@@ -4,10 +4,10 @@ import it.unibo.inner.api.IterableWithPolicy;
 import it.unibo.inner.api.Predicate;
 import it.unibo.inner.test.api.Product;
 import it.unibo.inner.test.impl.ProductImpl;
+import it.unibo.inner.impl.IterableWithPolicyImpl;
 
 import java.util.Arrays;
 import java.util.List;
-
 import static it.unibo.inner.test.Assertions.assertContentEqualsInOrder;
 
 public class TestIterableWithPolicy {
@@ -15,22 +15,24 @@ public class TestIterableWithPolicy {
     private TestIterableWithPolicy() {}
 
     private static <T> IterableWithPolicy<T> makeIterableWithPolicy(final T[] elements, final Predicate<T> filter) {
-        return null; // TODO: return the implementation of IterableWithPolicy
+        return new IterableWithPolicyImpl<>(elements, filter); // TODO: return the implementation of IterableWithPolicy
     }
 
     private static <T> IterableWithPolicy<T> makeIterableWithPolicy(final T[] elements) {
-        return null; // TODO: return the implementation of IterableWithPolicy
+        return new IterableWithPolicyImpl<>(elements); 
     }
 
     public static void main(final String[] args) {
         final String[] test1 = { "pippo", "pluto", "foo", "bar" };
         // Create filters
         final Predicate<String> filterPippoPluto = new Predicate<>() {
+            @Override
             public boolean test(final String elem) {
                 return elem.equals("pippo") || elem.equals("pluto");
             }
         };
         final Predicate<String> filterFooBar = new Predicate<>() {
+            @Override
             public boolean test(final String elem) {
                 return elem.equals("foo") || elem.equals("bar");
             }
@@ -39,8 +41,8 @@ public class TestIterableWithPolicy {
         final IterableWithPolicy<String> evenIterable = makeIterableWithPolicy(test1, filterPippoPluto);
         final IterableWithPolicy<String> oddIterable = makeIterableWithPolicy(test1, filterFooBar);
         // Verify the filter application
-        assertContentEqualsInOrder(List.of("pippo", "pluto"), evenIterable);
-        assertContentEqualsInOrder(List.of("foo", "bar"), oddIterable);
+       assertContentEqualsInOrder(List.of("pippo", "pluto"), evenIterable);
+       assertContentEqualsInOrder(List.of("foo", "bar"), oddIterable);
         // Create reject/accept filters
         Predicate<String> filterOutAll = new Predicate<>() {
             public boolean test(String elem) {
