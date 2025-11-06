@@ -60,11 +60,15 @@ class TestStrictBankAccount {
     @Test
     public void testNegativeWithdraw() {
         double amount = -100;
+        double balanceBeforeDraw = bankAccount.getBalance();
+        int transactionBeforeDraw = bankAccount.getTransactionsCount();
         try {
             bankAccount.withdraw(mRossi.getUserID(),amount);
         } catch (IllegalArgumentException e) {
             assertNotNull(e.getMessage()); // Non-null message
             assertFalse(e.getMessage().isBlank()); // Not a blank or empty message
+            assertEquals(balanceBeforeDraw, bankAccount.getBalance());// not modify the balance
+            assertEquals(transactionBeforeDraw, bankAccount.getTransactionsCount());// not modify the transactions count
         }
     }
 
@@ -74,11 +78,15 @@ class TestStrictBankAccount {
     @Test
     public void testWithdrawingTooMuch() {
         double amount = bankAccount.getBalance() + 1;
+        double balanceBeforeDraw = bankAccount.getBalance();
+        int transactionBeforeDraw = bankAccount.getTransactionsCount();
         try {
             bankAccount.withdraw(mRossi.getUserID(),amount);
         } catch (IllegalArgumentException e) {
             assertNotNull(e.getMessage()); // Non-null message
             assertFalse(e.getMessage().isBlank()); // Not a blank or empty message
+            assertEquals(balanceBeforeDraw, bankAccount.getBalance());// not modify the balance
+            assertEquals(transactionBeforeDraw, bankAccount.getTransactionsCount());// not modify the transactions count
         }
     }
 }
